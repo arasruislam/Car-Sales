@@ -6,8 +6,8 @@ from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.index, name="home"),
-    # path("cars/", include("cars.urls")),
+    path("", views.index, name="index"),
+    path("cars/", include("cars.urls")),
     path("users/", include("users.urls")),
 ]
 

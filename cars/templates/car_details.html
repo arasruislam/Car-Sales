@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<img src="{{car.image.url}}" alt="{{car.title}}">
+<h1>{{car.title}}</h1>
+<p>{{car.description}}</p>
+<p>Brand: {{car.brand.name}}</p>
+<p>Price: {{car.price}}</p>
+
+
+{% if request.user.is_authenticated %}
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-warning">Buy Now</button>
+</form>
+{% else %}
+<p>Please <a href="{% url 'login' %}">login</a> to buy this car</p>
+{% endif %}
+
+<h2>Comments</h2>
+<form method='POST' action="{% url 'add_comment' car.id %}">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Your Name">
+    <textarea name="comment" placeholder="Your Comment"></textarea>
+    <button type="submit">Add Comment</button>
+</form>
+
+<div>
+
+    {% for comment in comments %}
+    <div>
+        <strong>{{comment.name}}</strong>
+        <p>P{{comment.comment}}</p>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock body %}

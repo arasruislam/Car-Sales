@@ -1,6 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block body %}
-    <h1></h1>
+<h1 class="text-center fs-1 fw-bolder"> Welcome to Car Sales </h1>
+<img class="d-block mx-auto mb-3" src="{% static 'sales_car.jpg' %}" alt="">
+
+<h2>Available Cars</h2>
+<form action="{% url 'home' %}" method="GET">
+    <select name="brand">
+        <option value="">All Brands</option>
+        {% for brand in brands %}
+        <option value="{{brand.id}}">{{brand.name}}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-secondary">Filter</button>
+</form>
+
+<div>
+
+    {% for car in cars %}
+    <img src="{{car.image.url}}" alt="car image">
+    <h3>{{car.title}}</h3>
+    <p>{{car.price}}</p>
+    <a href="{% url 'car_details' car.id %}">Details</a>
+    {% endfor %}
+
+</div>
+
 {% endblock body %}
-    
